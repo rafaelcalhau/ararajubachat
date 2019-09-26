@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:300,400,500&display=swap');
+
+* {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: url('../images/bg-app.png') center bottom repeat-x #FEFBB4;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root, .App {
+  height: 100%;
+}
