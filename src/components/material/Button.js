@@ -1,6 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
+import MaterialButton from '@material-ui/core/Button'
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -13,17 +13,17 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-export default function MaterialButton (props) {
+export default function Button (props) {
   const classes = useStyles()
 
   return (
-    <Button
+    <MaterialButton
       fullWidth={props.full || false}
       variant={props.variant || 'contained'}
       className={classes.button}
       style={props.style}
     >
       {props.label}
-    </Button>
+    </MaterialButton>
   )
 }
