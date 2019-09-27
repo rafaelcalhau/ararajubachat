@@ -81,7 +81,7 @@ function FormSignup (props) {
           />
 
           <div className='button'>
-            <Button full label='Sign In' />
+            <Button full label='Create' />
           </div>
 
           <div className='separator'>or</div>
