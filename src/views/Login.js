@@ -40,8 +40,14 @@ function Login () {
             visibilityIcons={[VisibilityOff, Visibility]}
           />
 
-          <div style={{ margin: 10 }}>
+          <div className='button'>
             <Button full label='Sign In' />
+          </div>
+
+          <div className='separator'>or</div>
+
+          <div className='button'>
+            <Button full label='Sign Up' buttonClass='link' />
           </div>
         </form>
       </div>

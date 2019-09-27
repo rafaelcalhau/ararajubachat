@@ -1,0 +1,11 @@
+{
+    "buttons": {
+        "link": {
+            "bghover": "rgba(0,0,0,.1)"
+        },
+        "primary": {
+            "bg": "#0D9730",
+            "bghover": "#0abf37"
+        }
+    }
+}
