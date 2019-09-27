@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { TweenLite } from 'gsap/all'
+import { TweenLite, Power3 } from 'gsap/all'
 import IconAccountCircle from '@material-ui/icons/AccountCircle'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
@@ -14,13 +14,13 @@ function FormLogin (props) {
   let formElement = null
 
   useEffect(() => {
-    TweenLite.fromTo(formElement, 1, { x: -40, opacity: 0 }, { x: 0, opacity: 1 })
+    TweenLite.fromTo(formElement, 0.5, { x: -40, opacity: 0 }, { x: 0, opacity: 1, ease: Power3.ease })
   }, [formElement])
 
   const _changeForm = (name) => {
     if (props.changeForm) {
-      TweenLite.to(formElement, 1, { x: -100, opacity: 0 })
-      setTimeout(() => props.changeForm(name), 1000)
+      TweenLite.to(formElement, 1, { x: -100, opacity: 0, ease: Power3.ease })
+      setTimeout(() => props.changeForm(name), 500)
     }
   }
 
