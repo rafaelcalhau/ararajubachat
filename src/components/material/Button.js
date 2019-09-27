@@ -30,12 +30,19 @@ export default function Button (props) {
   const classes = useStyles()
   const buttonClass = props.buttonClass || 'default'
 
+  const _onClick = () => {
+    if (props.onClick) {
+      props.onClick()
+    }
+  }
+
   return (
     <MaterialButton
       fullWidth={props.full || false}
       variant={props.variant || 'contained'}
       className={classes[buttonClass]}
       style={props.style}
+      onClick={() => _onClick()}
     >
       {props.label}
     </MaterialButton>

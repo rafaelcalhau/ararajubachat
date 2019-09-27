@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     flexWrap: 'wrap'
   },
   margin: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(0)
   },
   withoutLabel: {
     marginTop: theme.spacing(3)
@@ -44,7 +44,10 @@ function InputField (props) {
   }
 
   return (
-    <FormControl className={clsx(classes.margin, classes.textField)}>
+    <FormControl
+      className={clsx(classes.margin, classes.textField)}
+      style={props.full && { width: '100%' }}
+    >
       <InputLabel
         style={{ marginTop: 13, paddingLeft: 15 }}
         htmlFor={props.id}
@@ -52,7 +55,7 @@ function InputField (props) {
         {props.label}
       </InputLabel>
       <Input
-        autoComplete='off'
+        autoComplete={props.autoComplete || 'off'}
         id={props.id}
         type={props.isSecure && !isVisible ? 'password' : 'text'}
         value={props.value}

@@ -1,58 +1,32 @@
-import React from 'react'
-import IconAccountCircle from '@material-ui/icons/AccountCircle'
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import React, { PureComponent } from 'react'
 
-import Button from '../components/material/Button'
-import InputField from '../components/material/InputField'
-
-import { appName } from '../config/settings.json'
-import Logo from '../assets/images/logo.png'
-
+import FormLogin from '../components/forms/FormLogin'
+import FormSignup from '../components/forms/FormSignup'
 import '../assets/styles/login.css'
 
-function Login () {
-  const handleChange = (field, value) => {
-    console.log(field, value)
+class Login extends PureComponent {
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      formName: 'login'
+    }
   }
 
-  return (
-    <div id='login'>
-      <div className='box'>
-        <div className='header'>
-          <img src={Logo} alt={appName} className='logo' />
-          <div>{appName}</div>
-        </div>
-        <form>
-          <InputField
-            borderBottomColor='white'
-            icon={IconAccountCircle}
-            id='username'
-            label='Username'
-            handleChange={val => handleChange('username', val)}
-          />
+  changeForm = formName => this.setState({ formName })
 
-          <InputField
-            borderBottomColor='white'
-            id='password'
-            isSecure
-            label='Password'
-            visibilityIcons={[VisibilityOff, Visibility]}
-          />
+  render () {
+    return (
+      <div id='login'>
+        {
+          this.state.formName === 'login'
+            ? <FormLogin changeForm={formName => this.changeForm(formName)} />
+            : <FormSignup changeForm={formName => this.changeForm(formName)} />
+        }
 
-          <div className='button'>
-            <Button full label='Sign In' />
-          </div>
-
-          <div className='separator'>or</div>
-
-          <div className='button'>
-            <Button full label='Sign Up' buttonClass='link' />
-          </div>
-        </form>
       </div>
-    </div>
-  )
+    )
+  }
 }
 
 export default Login

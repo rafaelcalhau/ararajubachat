@@ -25,11 +25,15 @@
 }
 
 #login form .button {
-    margin: 10px
+    margin: 16px 8px
 }
 
 #login form .separator {
     margin: 15px auto;
     text-align: center;
     width: 100%;
+}
+
+#login .signup {
+    opacity: 0
 }
