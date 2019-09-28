@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Power3 } from 'gsap'
 import TweenLite from 'gsap/umd/TweenLite'
 
@@ -14,6 +14,10 @@ import Logo from '../../assets/images/logo.png'
 
 function FormLogin (props) {
   let formElement = null
+  const [state, setState] = useState({
+    username: '',
+    password: ''
+  })
 
   useEffect(() => {
     TweenLite.fromTo(formElement, 0.5, { x: -40, opacity: 0 }, { x: 0, opacity: 1, ease: Power3.ease })
@@ -27,7 +31,7 @@ function FormLogin (props) {
   }
 
   const handleChange = (field, value) => {
-    console.log(field, value)
+    setState({ ...state, [field]: value })
   }
 
   return (
@@ -44,6 +48,7 @@ function FormLogin (props) {
             icon={IconAccountCircle}
             id='username'
             label='Username'
+            value={state.username}
             handleChange={val => handleChange('username', val)}
           />
 
@@ -53,6 +58,8 @@ function FormLogin (props) {
             id='password'
             isSecure
             label='Password'
+            value={state.password}
+            handleChange={val => handleChange('password', val)}
             visibilityIcons={[VisibilityOff, Visibility]}
           />
 
