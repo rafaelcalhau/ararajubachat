@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { TweenLite, Power3 } from 'gsap/all'
+import { Power3 } from 'gsap'
+import TweenLite from 'gsap/umd/TweenLite'
 
 import IconAccountCircle from '@material-ui/icons/AccountCircle'
 import Visibility from '@material-ui/icons/Visibility'
