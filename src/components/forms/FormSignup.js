@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Power3 } from 'gsap'
 import TweenLite from 'gsap/umd/TweenLite'
 
@@ -14,6 +14,13 @@ import Logo from '../../assets/images/logo.png'
 
 function FormSignup (props) {
   let formElement = null
+  const [state, setState] = useState({
+    firstname: '',
+    lastname: '',
+    username: '',
+    password: '',
+    passwordConfirm: ''
+  })
 
   useEffect(() => {
     TweenLite.fromTo(formElement, 0.5, { x: 40, opacity: 0 }, { x: 0, opacity: 1, ease: Power3.ease })
@@ -27,7 +34,7 @@ function FormSignup (props) {
   }
 
   const handleChange = (field, value) => {
-    console.log(field, value)
+    setState({ ...state, [field]: value })
   }
 
   return (
@@ -44,6 +51,7 @@ function FormSignup (props) {
             id='firstname'
             label='Firstname'
             handleChange={val => handleChange('firstname', val)}
+            value={state.firstname}
           />
 
           <InputField
@@ -52,6 +60,7 @@ function FormSignup (props) {
             id='lastname'
             label='Lastname'
             handleChange={val => handleChange('lastname', val)}
+            value={state.lastname}
           />
 
           <InputField
@@ -61,6 +70,7 @@ function FormSignup (props) {
             id='username'
             label='Username'
             handleChange={val => handleChange('username', val)}
+            value={state.username}
           />
 
           <InputField
@@ -69,6 +79,8 @@ function FormSignup (props) {
             id='password'
             isSecure
             label='Password'
+            handleChange={val => handleChange('password', val)}
+            value={state.password}
             visibilityIcons={[VisibilityOff, Visibility]}
           />
 
@@ -78,6 +90,8 @@ function FormSignup (props) {
             id='passwordConfirm'
             isSecure
             label='Confirm Password'
+            handleChange={val => handleChange('passwordConfirm', val)}
+            value={state.passwordConfirm}
             visibilityIcons={[VisibilityOff, Visibility]}
           />
 

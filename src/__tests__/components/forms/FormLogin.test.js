@@ -49,14 +49,16 @@ describe('<FormLogin />', () => {
   })
 
   it('should visibility button change input password type between password and text', () => {
-    expect(wrapper.find('button').at(1).simulate('click'))
+    wrapper.find('button').at(1).simulate('click')
     expect(wrapper.find('input').at(1).prop('type')).toEqual('text')
-    expect(wrapper.find('button').at(1).simulate('click'))
+    
+    wrapper.find('button').at(1).simulate('click')
     expect(wrapper.find('input').at(1).prop('type')).toEqual('password')
   })
 
   it('should "Sign Up" button call changeForm', (done) => {
-    expect(wrapper.find(Button).at(1).simulate('click'))
+    wrapper.find(Button).at(1).simulate('click')
+    
     setTimeout(() => {
       expect(changeForm.mock.calls[0][0]).toBe('signup')
       done()
