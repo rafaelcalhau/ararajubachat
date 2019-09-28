@@ -22,6 +22,23 @@ describe('<FormLogin />', () => {
     expect(wrapper.find('input').at(1).prop('id')).toBe('password')
   })
 
+  it('should the fields username and password values be handled by component state', () => {
+    const inputUsername = wrapper.find('input').at(0)
+    const inputPassword = wrapper.find('input').at(1)
+
+    inputUsername.simulate('change', {
+      target: { value: 'rafael' }
+    })
+
+    expect(inputUsername.getDOMNode().value).toBe('rafael')
+
+    inputPassword.simulate('change', {
+      target: { value: '123123' }
+    })
+
+    expect(inputPassword.getDOMNode().value).toBe('123123')
+  })
+
   it('should have 4 buttons', () => {
     expect(wrapper.find('button').length).toEqual(4)
   })
