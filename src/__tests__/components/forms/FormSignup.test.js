@@ -5,37 +5,41 @@ import Button from '../../../components/material/Button'
 import FormSignup from '../../../components/forms/FormSignup'
 
 describe('<FormSignup />', () => {
-  let wrapper
+  let wrapper, inputFirstname, inputLastname, inputUsername, inputPassword, inputPasswordConfirm
   const changeForm = jest.fn()
 
-  beforeEach(() => {
+  beforeAll(() => {
     wrapper = mount(<FormSignup changeForm={formName => changeForm(formName)} />)
+
+    inputFirstname = wrapper.find('input').at(0)
+    inputLastname = wrapper.find('input').at(1)
+    inputUsername = wrapper.find('input').at(2)
+    inputPassword = wrapper.find('input').at(3)
+    inputPasswordConfirm = wrapper.find('input').at(4)
   })
 
   afterEach(() => jest.clearAllMocks())
 
   it('should have 5 fields: firstname, lastname, username, password, and confirm password', () => {
     expect(wrapper.find('input').length).toEqual(5)
-    expect(wrapper.find('input').at(0).prop('type')).toEqual('text')
-    expect(wrapper.find('input').at(0).prop('id')).toBe('firstname')
-    expect(wrapper.find('input').at(1).prop('type')).toEqual('text')
-    expect(wrapper.find('input').at(1).prop('id')).toBe('lastname')
-    expect(wrapper.find('input').at(2).prop('type')).toEqual('text')
-    expect(wrapper.find('input').at(2).prop('id')).toBe('username')
+
+    expect(inputFirstname.prop('type')).toEqual('text')
+    expect(inputFirstname.prop('id')).toBe('firstname')
+
+    expect(inputLastname.prop('type')).toEqual('text')
+    expect(inputLastname.prop('id')).toBe('lastname')
+
+    expect(inputUsername.prop('type')).toEqual('text')
+    expect(inputUsername.prop('id')).toBe('username')
     
-    expect(wrapper.find('input').at(3).prop('type')).toEqual('password')
-    expect(wrapper.find('input').at(3).prop('id')).toBe('password')
-    expect(wrapper.find('input').at(4).prop('type')).toEqual('password')
-    expect(wrapper.find('input').at(4).prop('id')).toBe('passwordConfirm')
+    expect(inputPassword.prop('type')).toEqual('password')
+    expect(inputPassword.prop('id')).toBe('password')
+
+    expect(inputPasswordConfirm.prop('type')).toEqual('password')
+    expect(inputPasswordConfirm.prop('id')).toBe('passwordConfirm')
   })
 
   it('should the fields be handled by component state', () => {
-    const inputFirstname = wrapper.find('input').at(0)
-    const inputLastname = wrapper.find('input').at(1)
-    const inputUsername = wrapper.find('input').at(2)
-    const inputPassword = wrapper.find('input').at(3)
-    const inputPasswordConfirm = wrapper.find('input').at(4)
-
     inputFirstname.simulate('change', {target: { value: 'Rafael' }})
     expect(inputFirstname.getDOMNode().value).toBe('Rafael')
 
