@@ -112,8 +112,6 @@ function FormSignup (props) {
             <Button disabled={state.buttonIsDisabled} full label='Create' />
           </div>
 
-          <div className='separator'>or</div>
-
           <div className='button'>
             <Button
               full
