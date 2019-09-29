@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl'
+import FormHelperText from '@material-ui/core/FormHelperText'
 import Input from '@material-ui/core/Input'
 import InputLabel from '@material-ui/core/InputLabel'
 
@@ -27,6 +28,7 @@ const useStyles = makeStyles(theme => ({
 
 function InputField (props) {
   const classes = useStyles()
+  const error = props.error || false
   const Icon = props.icon || null
   const [isVisible, setVisibility] = useState(false)
   const VisibilityIcons = props.visibilityIcons || null
@@ -46,6 +48,7 @@ function InputField (props) {
   return (
     <FormControl
       className={clsx(classes.margin, classes.textField)}
+      error={error && true}
       style={props.full && { width: '100%' }}
     >
       <InputLabel
@@ -67,6 +70,9 @@ function InputField (props) {
             : (VisibilityIcons ? <VisibilityIcon handleVisibility={handleVisibility} icons={VisibilityIcons} /> : null)
         }
       />
+      {
+        error && <FormHelperText id={`component-error-text-id-${props.id}`}>{error}</FormHelperText>
+      }
     </FormControl>
   )
 }
