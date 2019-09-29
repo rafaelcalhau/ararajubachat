@@ -1,3 +1,6 @@
 {
-    "appName": "Ararajuba Chat"
+    "appName": "Ararajuba Chat",
+    "regexList": {
+        "username": "^[a-z]([a-z0-9]+)*$"
+    }
 }

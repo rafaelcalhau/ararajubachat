@@ -9,7 +9,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Button from '../material/Button'
 import InputField from '../material/InputField'
 
-import { appName } from '../../config/settings.json'
+import { appName, regexList } from '../../config/settings.json'
 import Logo from '../../assets/images/logo.png'
 
 function FormSignup (props) {
@@ -19,7 +19,9 @@ function FormSignup (props) {
     lastname: '',
     username: '',
     password: '',
-    passwordConfirm: ''
+    passwordConfirm: '',
+    buttonIsDisabled: true,
+    errors: {}
   })
 
   useEffect(() => {
@@ -34,7 +36,17 @@ function FormSignup (props) {
   }
 
   const handleChange = (field, value) => {
-    setState({ ...state, [field]: value })
+    const newState = { ...state, [field]: value }
+
+    if (field === 'username' && value.length > 0) {
+      if (!new RegExp(regexList.username).test(value)) {
+        newState.errors.username = 'Your username must start with a letter and use only lowercase characters.'
+      } else {
+        newState.errors.username = undefined
+      }
+    }
+
+    setState(newState)
   }
 
   return (
@@ -64,6 +76,7 @@ function FormSignup (props) {
           />
 
           <InputField
+            error={state.errors.username || false}
             full
             borderBottomColor='white'
             icon={IconAccountCircle}
@@ -96,7 +109,7 @@ function FormSignup (props) {
           />
 
           <div className='button'>
-            <Button full label='Create' />
+            <Button disabled={state.buttonIsDisabled} full label='Create' />
           </div>
 
           <div className='separator'>or</div>
