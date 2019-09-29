@@ -29,6 +29,7 @@ const useStyles = makeStyles(theme => ({
 export default function Button (props) {
   const classes = useStyles()
   const buttonClass = props.buttonClass || 'default'
+  const disabled = props.disabled || false
 
   const _onClick = () => {
     if (props.onClick) {
@@ -38,6 +39,7 @@ export default function Button (props) {
 
   return (
     <MaterialButton
+      disabled={disabled}
       fullWidth={props.full || false}
       variant={props.variant || 'contained'}
       className={classes[buttonClass]}
