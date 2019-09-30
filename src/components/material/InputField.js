@@ -30,8 +30,10 @@ function InputField (props) {
   const classes = useStyles()
   const error = props.error || false
   const Icon = props.icon || null
+  const iconColor = props.iconColor || null
   const [isVisible, setVisibility] = useState(false)
   const VisibilityIcons = props.visibilityIcons || null
+  const defaultStyles = { paddingTop: 14, paddingRight: 0, paddingBottom: 0, paddingLeft: 14 }
 
   const handleBlur = (e) => {
     const { value } = e.target
@@ -71,12 +73,12 @@ function InputField (props) {
         id={props.id}
         type={props.isSecure && !isVisible ? 'password' : 'text'}
         value={props.value}
-        style={{ paddingTop: 14, paddingRight: 0, paddingBottom: 0, paddingLeft: 14 }}
+        style={{ ...defaultStyles, color: props.labelColor }}
         onBlur={handleBlur}
         onChange={handleChange}
         endAdornment={
           Icon
-            ? <InputIcon icon={Icon} />
+            ? <InputIcon icon={Icon} color={iconColor} />
             : (VisibilityIcons ? <VisibilityIcon handleVisibility={handleVisibility} icons={VisibilityIcons} /> : null)
         }
       />
@@ -89,7 +91,9 @@ function InputField (props) {
 
 InputField.propTypes = {
   id: PropTypes.string,
-  label: PropTypes.string
+  iconColor: PropTypes.oneOf(['green', 'red']),
+  label: PropTypes.string,
+  labelColor: PropTypes.oneOf(['green', 'red'])
 }
 
 export default InputField
