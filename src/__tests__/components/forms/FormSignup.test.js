@@ -1,18 +1,28 @@
 import React from 'react'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 import { mount } from 'enzyme'
-
 import Button from '../../../components/material/Button'
 import InputField from '../../../components/material/InputField'
 import FormSignup from '../../../components/forms/FormSignup'
 import { regexList } from '../../../config/settings.json'
+import { verifyUsername } from '../../../store/actions/user'
+import reducer from '../../../store'
 
 describe('<FormSignup />', () => {
   let buttonBack, buttonCreate
   let wrapper, inputFirstname, inputLastname, inputUsername, inputPassword, inputPasswordConfirm
   const changeForm = jest.fn()
+  const originalError = console.error
+  const store = createStore(reducer, applyMiddleware(thunk))
 
   beforeAll(() => {
-    wrapper = mount(<FormSignup changeForm={formName => changeForm(formName)} />)
+    wrapper = mount(
+      <Provider store={store}>
+        <FormSignup changeForm={formName => changeForm(formName)} />
+      </Provider>
+    )
 
     buttonBack = wrapper.find(Button).at(0)
     buttonCreate = wrapper.find(Button).at(1)
@@ -21,9 +31,20 @@ describe('<FormSignup />', () => {
     inputUsername = wrapper.find('input').at(2)
     inputPassword = wrapper.find('input').at(3)
     inputPasswordConfirm = wrapper.find('input').at(4)
+
+    console.error = (...args) => {
+      if (/Warning.*not wrapped in act/.test(args[0])) {
+        return
+      }
+      originalError.call(console, ...args)
+    }
   })
 
   afterEach(() => jest.clearAllMocks())
+
+  afterAll(() => {
+    console.error = originalError
+  })
 
   it('should have 5 fields: firstname, lastname, username, password, and confirm password', () => {
     expect(wrapper.find('input').length).toEqual(5)
@@ -97,7 +118,7 @@ describe('<FormSignup />', () => {
     }, 500)
   })
 
-  it('should the field username accept only the pattern [a-z0-9] starting always by a letter', async () => {
+  it('should the field username accept only the pattern [a-z0-9] starting always by a letter', () => {
     const regex = new RegExp(regexList.username)
     const allowed = ['rafael', 'rafa3l']
     const notAllowed = ['1rafael', 'Rafael', 'rafaEl']
@@ -117,5 +138,34 @@ describe('<FormSignup />', () => {
 
       return true
     })
+  })
+
+  it('should a verification for available username be performed on blur event of the field username', (done) => {
+    let callNumber = 0
+    const data = {}
+    const dispatch = jest.fn(params => {
+      if (callNumber === 0) {
+        expect(params).toEqual({ type: 'VERIFY_USERNAME_REQUEST' })
+      } else if (callNumber === 1) {
+        expect(params).toEqual({ type: 'VERIFY_USERNAME_SUCCESS', data })
+
+        done()
+      }
+
+      callNumber++
+    })
+
+    inputUsername = wrapper.find('input').at(2)
+    inputUsername.simulate('change', {target: {value: 'justAnInvalidUsername'}})
+    expect(wrapper.find(InputField).at(2).props().disabled).toBeFalsy()
+
+    inputUsername.simulate('blur')
+    expect(wrapper.find(InputField).at(2).props().disabled).toBeTruthy()
+
+    const apiClientMock = {
+      get: jest.fn(() => Promise.resolve({ data }))
+    }
+    
+    verifyUsername(apiClientMock)(dispatch)
   })
 })

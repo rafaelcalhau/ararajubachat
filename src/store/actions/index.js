@@ -1,1 +1,5 @@
-export const doLogin = (value) => ({ type: 'LOGIN', value })
+import userActions from './user'
+
+export default {
+  verifyUsername: userActions.verifyUsername
+}

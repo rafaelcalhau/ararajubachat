@@ -33,6 +33,14 @@ function InputField (props) {
   const [isVisible, setVisibility] = useState(false)
   const VisibilityIcons = props.visibilityIcons || null
 
+  const handleBlur = (e) => {
+    const { value } = e.target
+
+    if (props.handleBlur) {
+      props.handleBlur(value)
+    }
+  }
+
   const handleChange = (e) => {
     const { value } = e.target
 
@@ -59,10 +67,12 @@ function InputField (props) {
       </InputLabel>
       <Input
         autoComplete={props.autoComplete || 'off'}
+        disabled={props.disabled}
         id={props.id}
         type={props.isSecure && !isVisible ? 'password' : 'text'}
         value={props.value}
         style={{ paddingTop: 14, paddingRight: 0, paddingBottom: 0, paddingLeft: 14 }}
+        onBlur={handleBlur}
         onChange={handleChange}
         endAdornment={
           Icon

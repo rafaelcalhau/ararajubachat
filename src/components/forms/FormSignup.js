@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
 import { Power3 } from 'gsap'
 import TweenLite from 'gsap/umd/TweenLite'
 
@@ -11,6 +12,8 @@ import InputField from '../material/InputField'
 
 import { appName, regexList } from '../../config/settings.json'
 import Logo from '../../assets/images/logo.png'
+
+import actions from '../../store/actions'
 
 function FormSignup (props) {
   let formElement = null
@@ -76,12 +79,14 @@ function FormSignup (props) {
           />
 
           <InputField
+            disabled={props.isVerifyingUsername}
             error={state.errors.username || false}
             full
             borderBottomColor='white'
             icon={IconAccountCircle}
             id='username'
             label='Username'
+            handleBlur={val => props.verifyUsername(val)}
             handleChange={val => handleChange('username', val)}
             value={state.username}
           />
@@ -127,4 +132,12 @@ function FormSignup (props) {
   )
 }
 
-export default FormSignup
+const mapStateToProps = state => ({
+  isVerifyingUsername: state.user.isVerifyingUsername
+})
+
+const mapDispatchToProps = dispatch => ({
+  verifyUsername: value => dispatch(actions.verifyUsername(value))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormSignup)

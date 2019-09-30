@@ -7,7 +7,7 @@ import Main from './views/Main'
 import './assets/styles/app.css'
 
 function App () {
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.user.data)
 
   return (
     <div className='App'>
