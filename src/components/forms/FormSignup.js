@@ -52,6 +52,16 @@ function FormSignup (props) {
     setState(newState)
   }
 
+  const handleErrorsAboutUsername = () => {
+    if (state.errors.username) {
+      return state.errors.username
+    } else if (props.isUsernameAvailable === false) {
+      return 'This username is unavailable.'
+    }
+
+    return false
+  }
+
   return (
     <div ref={div => (formElement = div)}>
       <div className='box'>
@@ -80,7 +90,7 @@ function FormSignup (props) {
 
           <InputField
             disabled={props.isVerifyingUsername}
-            error={state.errors.username || false}
+            error={handleErrorsAboutUsername()}
             full
             borderBottomColor='white'
             icon={IconAccountCircle}
@@ -133,6 +143,7 @@ function FormSignup (props) {
 }
 
 const mapStateToProps = state => ({
+  isUsernameAvailable: state.user.isUsernameAvailable,
   isVerifyingUsername: state.user.isVerifyingUsername
 })
 

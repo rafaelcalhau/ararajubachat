@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
   data: null,
   isVerifyingUsername: false,
-  isUsernameAvailable: false
+  isUsernameAvailable: null
 }
 
 const reducer = (state = INITIAL_STATE, action) => {
