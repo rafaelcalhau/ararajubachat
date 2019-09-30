@@ -24,7 +24,8 @@ function FormSignup (props) {
     password: '',
     passwordConfirm: '',
     buttonIsDisabled: true,
-    errors: {}
+    errors: {},
+    usernameBlurInvoked: false
   })
 
   useEffect(() => {
@@ -38,6 +39,14 @@ function FormSignup (props) {
     }
   }
 
+  const handleBlur = (val) => {
+    if (val.length >= 3) {
+      props.verifyUsername(val)
+    }
+
+    setState({ ...state, usernameBlurInvoked: true })
+  }
+
   const handleChange = (field, value) => {
     const newState = { ...state, [field]: value }
 
@@ -49,17 +58,37 @@ function FormSignup (props) {
       }
     }
 
+    newState.usernameBlurInvoked = false
+
     setState(newState)
   }
 
   const handleErrorsAboutUsername = () => {
     if (state.errors.username) {
       return state.errors.username
-    } else if (props.isUsernameAvailable === false) {
+    } else if (state.username.length && props.isUsernameAvailable === false) {
       return 'This username is unavailable.'
     }
 
     return false
+  }
+
+  const handleUsernameInputColor = () => {
+    const { errors, username, usernameBlurInvoked } = state
+
+    if (usernameBlurInvoked) {
+      if (errors.username) {
+        return 'red'
+      } else if (username.length >= 3) {
+        if (props.isUsernameAvailable === false) {
+          return 'red'
+        } else {
+          return 'green'
+        }
+      }
+    }
+
+    return null
   }
 
   return (
@@ -94,9 +123,11 @@ function FormSignup (props) {
             full
             borderBottomColor='white'
             icon={IconAccountCircle}
+            iconColor={handleUsernameInputColor()}
             id='username'
             label='Username'
-            handleBlur={val => props.verifyUsername(val)}
+            labelColor={handleUsernameInputColor()}
+            handleBlur={val => handleBlur(val)}
             handleChange={val => handleChange('username', val)}
             value={state.username}
           />
