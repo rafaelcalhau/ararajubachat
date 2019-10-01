@@ -2,15 +2,16 @@ import React from 'react'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import { SnackbarProvider } from 'notistack'
 
 import Button from '../../../components/material/Button'
 import InputField from '../../../components/material/InputField'
 import FormSignup from '../../../components/forms/FormSignup'
 import { regexList } from '../../../config/settings.json'
-import { verifyUsername } from '../../../store/actions/user'
+import { registerUser, verifyUsername } from '../../../store/actions/user'
 import reducer from '../../../store'
+import validator from '../../../modules/validators/signup'
 
 describe('<FormSignup />', () => {
   let buttonBack, buttonCreate
@@ -179,5 +180,50 @@ describe('<FormSignup />', () => {
     }
 
     expect(wrapper.find('button.Mui-disabled').length).toEqual(0)
+  })
+
+  it('should validate all fields and request a new user registration', (done) => {
+    let callNumber = 0
+    const data = {}
+    const dispatch = jest.fn(params => {
+      if (callNumber === 0) {
+        expect(params).toEqual({ type: 'REGISTER_USER_REQUEST' })
+      } else if (callNumber === 1) {
+        expect(params).toEqual({ type: 'REGISTER_USER_SUCCESS', data })
+
+        done()
+      }
+
+      callNumber++
+    })
+
+    // Firstname
+    wrapper.find('input').at(0).simulate('change', {target: {value: 'Rafael'}})
+    data.firstname = wrapper.find('input').at(0).getDOMNode().value
+
+    // Lastname
+    wrapper.find('input').at(1).simulate('change', {target: {value: 'Calhau'}})
+    data.lastname = wrapper.find('input').at(1).getDOMNode().value
+
+    // Username
+    wrapper.find('input').at(2).simulate('change', {target: {value: 'rafaelcalhau'}})
+    data.username = wrapper.find('input').at(2).getDOMNode().value
+
+    // Password
+    wrapper.find('input').at(3).simulate('change', {target: {value: '123456'}})
+    data.password = wrapper.find('input').at(3).getDOMNode().value
+
+    // Confirm Password
+    wrapper.find('input').at(4).simulate('change', {target: {value: '123456'}})
+    data.passwordConfirm = wrapper.find('input').at(4).getDOMNode().value
+
+    const validation = validator(data)
+    expect(validation.success).toBeTruthy()
+
+    const apiClientMock = {
+      post: jest.fn(() => Promise.resolve({ data }))
+    }
+    
+    registerUser(apiClientMock, data)(dispatch)
   })
 })
