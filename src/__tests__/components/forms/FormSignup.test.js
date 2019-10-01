@@ -3,6 +3,8 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
 import { mount } from 'enzyme'
+import { SnackbarProvider } from 'notistack'
+
 import Button from '../../../components/material/Button'
 import InputField from '../../../components/material/InputField'
 import FormSignup from '../../../components/forms/FormSignup'
@@ -20,7 +22,9 @@ describe('<FormSignup />', () => {
   beforeAll(() => {
     wrapper = mount(
       <Provider store={store}>
-        <FormSignup changeForm={formName => changeForm(formName)} />
+        <SnackbarProvider>
+          <FormSignup changeForm={formName => changeForm(formName)} />
+        </SnackbarProvider>
       </Provider>
     )
 
@@ -157,11 +161,8 @@ describe('<FormSignup />', () => {
 
     inputUsername = wrapper.find('input').at(2)
     inputUsername.simulate('change', {target: {value: 'justAnInvalidUsername'}})
-    expect(wrapper.find(InputField).at(2).props().disabled).toBeFalsy()
-
     inputUsername.simulate('blur')
-    expect(wrapper.find(InputField).at(2).props().disabled).toBeTruthy()
-
+    
     const apiClientMock = {
       get: jest.fn(() => Promise.resolve({ data }))
     }

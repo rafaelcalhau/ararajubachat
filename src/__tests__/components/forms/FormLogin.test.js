@@ -1,5 +1,6 @@
 import React from 'react'
 import { mount } from 'enzyme'
+import { SnackbarProvider } from 'notistack'
 
 import Button from '../../../components/material/Button'
 import FormLogin from '../../../components/forms/FormLogin'
@@ -9,7 +10,11 @@ describe('<FormLogin />', () => {
   const changeForm = jest.fn()
 
   beforeEach(() => {
-    wrapper = mount(<FormLogin changeForm={formName => changeForm(formName)} />)
+    wrapper = mount(
+      <SnackbarProvider>
+        <FormLogin changeForm={formName => changeForm(formName)} />
+      </SnackbarProvider>
+    )
   })
 
   afterEach(() => jest.clearAllMocks())
