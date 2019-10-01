@@ -1,5 +1,8 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { SnackbarProvider } from 'notistack'
+
+import { recoverStoredUser } from './store/actions/user'
 
 import Login from './views/Login'
 import Main from './views/Main'
@@ -7,16 +10,28 @@ import Main from './views/Main'
 import './assets/styles/app.css'
 
 function App () {
+  const dispatch = useDispatch()
   const user = useSelector(state => state.user.data)
 
+  if (!user) {
+    dispatch(recoverStoredUser())
+  }
+
   return (
-    <div className='App'>
+    <SnackbarProvider
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center'
+      }}
+      className='App'
+      maxSnack={3}
+    >
       {
         !user
           ? <Login />
           : <Main />
       }
-    </div>
+    </SnackbarProvider>
   )
 }
 

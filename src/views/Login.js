@@ -1,32 +1,19 @@
-import React, { PureComponent } from 'react'
+import React, { useState } from 'react'
 
 import FormLogin from '../components/forms/FormLogin'
 import FormSignup from '../components/forms/FormSignup'
 import '../assets/styles/login.css'
 
-class Login extends PureComponent {
-  constructor (props) {
-    super(props)
+export default function Login () {
+  const [formName, setFormName] = useState('login')
 
-    this.state = {
-      formName: 'login'
-    }
-  }
-
-  changeForm = formName => this.setState({ formName })
-
-  render () {
-    return (
-      <div id='login'>
-        {
-          this.state.formName === 'login'
-            ? <FormLogin changeForm={formName => this.changeForm(formName)} />
-            : <FormSignup changeForm={formName => this.changeForm(formName)} />
-        }
-
-      </div>
-    )
-  }
+  return (
+    <div id='login'>
+      {
+        formName === 'login'
+          ? <FormLogin changeForm={formName => setFormName(formName)} />
+          : <FormSignup changeForm={formName => setFormName(formName)} />
+      }
+    </div>
+  )
 }
-
-export default Login
