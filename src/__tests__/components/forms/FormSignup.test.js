@@ -2,7 +2,7 @@ import React from 'react'
 import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
-import { mount } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import { SnackbarProvider } from 'notistack'
 
 import Button from '../../../components/material/Button'
@@ -28,8 +28,8 @@ describe('<FormSignup />', () => {
       </Provider>
     )
 
-    buttonBack = wrapper.find(Button).at(0)
-    buttonCreate = wrapper.find(Button).at(1)
+    buttonCreate = wrapper.find(Button).at(0)
+    buttonBack = wrapper.find(Button).at(1)
     inputFirstname = wrapper.find('input').at(0)
     inputLastname = wrapper.find('input').at(1)
     inputUsername = wrapper.find('input').at(2)
@@ -91,8 +91,8 @@ describe('<FormSignup />', () => {
   })
 
   it('should have 2 action buttons: Create and Back', () => {
-    expect(buttonBack.find('span').at(0).text()).toEqual('Create')
-    expect(buttonCreate.find('span').at(0).text()).toEqual('Back')
+    expect(buttonBack.find('span').at(0).text()).toEqual('Back')
+    expect(buttonCreate.find('span').at(0).text()).toEqual('Create')
   })
 
   it('should visibility button change input password type between password and text', () => {
@@ -110,11 +110,11 @@ describe('<FormSignup />', () => {
   })
 
   it('should "Create" button start disabled', () => {
-    expect(buttonBack.props().disabled).toBeTruthy()
+    expect(buttonCreate.props().disabled).toBeTruthy()
   })
 
   it('should "Sign Up" button call changeForm', (done) => {
-    buttonCreate.simulate('click')
+    buttonBack.simulate('click')
 
     setTimeout(() => {
       expect(changeForm.mock.calls[0][0]).toBe('login')
@@ -162,11 +162,22 @@ describe('<FormSignup />', () => {
     inputUsername = wrapper.find('input').at(2)
     inputUsername.simulate('change', {target: {value: 'justAnInvalidUsername'}})
     inputUsername.simulate('blur')
-    
+
     const apiClientMock = {
       get: jest.fn(() => Promise.resolve({ data }))
     }
     
     verifyUsername(apiClientMock)(dispatch)
+  })
+
+  it('should the "Create" button stay enabled only if all fields are filled', () => {
+    expect(buttonCreate.prop('disabled')).toBeTruthy()
+
+    for (let i = 0; i < 5; i++) {
+      wrapper.find('input').at(i).simulate('change', {target: {value: 'a'}})
+      expect(wrapper.find('input').at(i).getDOMNode().value.length).toEqual(1)
+    }
+
+    expect(wrapper.find('button.Mui-disabled').length).toEqual(0)
   })
 })
