@@ -8,13 +8,15 @@ export const authenticateWithToken = (apiClient, localStorage) => (dispatch) => 
       const user = JSON.parse(storedData)
       dispatch(authenticateWithTokenRequest({ isAuthenticating: true }))
 
-      apiClient
-        .post('/authenticate-token', {
-          username: user.username,
-          token: user.token
-        })
-        .then(({ data }) => dispatch(authenticateWithTokenSuccess(data)))
-        .catch(err => dispatch(authenticateWithTokenFailure(err)))
+      setTimeout(() => {
+        apiClient
+          .post('/authenticate-token', {
+            username: user.username,
+            token: user.token
+          })
+          .then(() => dispatch(authenticateWithTokenSuccess(user)))
+          .catch(err => dispatch(authenticateWithTokenFailure(err)))
+      }, 2000)
     } catch (e) {
       console.log(e)
       dispatch(authenticateWithTokenFailure(e))

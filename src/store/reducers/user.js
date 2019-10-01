@@ -12,22 +12,10 @@ const reducer = (state = INITIAL_STATE, action) => {
 
   switch (type) {
     case 'AUTH_TOKEN_SUCCESS':
-      return (function () {
-        let user
-
-        try {
-          const data = window.localStorage.getItem('ararajubachat')
-          user = JSON.parse(data)
-        } catch (e) {
-          user = null
-          console.log(e)
-        }
-
-        return {
-          ...state,
-          data: user
-        }
-      }())
+      return {
+        ...state,
+        data: action.data
+      }
     case 'REGISTER_USER_FAILURE':
       return {
         ...state,
