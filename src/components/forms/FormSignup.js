@@ -20,15 +20,16 @@ import validator from '../../modules/validators/signup'
 function FormSignup (props) {
   let formElement = null
   const [state, setState] = useState({
-    firstname: '',
-    lastname: '',
-    username: '',
-    password: '',
-    passwordConfirm: '',
     buttonIsDisabled: true,
     errors: {},
     usernameBlurInvoked: false
   })
+
+  const [firstname, setFirstname] = useState('')
+  const [lastname, setLastname] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
 
   const dispatch = useDispatch()
   const { enqueueSnackbar } = useSnackbar()
@@ -44,13 +45,15 @@ function FormSignup (props) {
   }, [formElement])
 
   const createAccount = () => {
-    const { firstname, lastname, username, password, passwordConfirm } = state
     const validation = validator({ firstname, lastname, username, password, passwordConfirm })
 
     if (!validation.success) {
       setState({
         ...state,
-        errors: { ...state.errors, ...validation.errors }
+        errors: {
+          ...state.errors,
+          ...validation.errors
+        }
       })
     } else {
       dispatch(actions.registerUser({ firstname, lastname, username, password }))
@@ -75,12 +78,31 @@ function FormSignup (props) {
   const handleChange = (field, value) => {
     const newState = { ...state, [field]: value }
 
-    if (field === 'username' && value.length > 0) {
-      if (!new RegExp(regexList.username).test(value)) {
-        newState.errors.username = 'Your username must start with a letter and use only lowercase characters.'
-      } else {
-        newState.errors.username = undefined
-      }
+    switch (field) {
+      case 'firstname':
+        setFirstname(value)
+        break
+      case 'lastname':
+        setLastname(value)
+        break
+      case 'username':
+        if (value.length > 0) {
+          if (!new RegExp(regexList.username).test(value)) {
+            newState.errors.username = 'Your username must start with a letter and use only lowercase characters.'
+          } else {
+            newState.errors.username = undefined
+          }
+        }
+        setUsername(value)
+        break
+      case 'password':
+        setPassword(value)
+        break
+      case 'passwordConfirm':
+        setPasswordConfirm(value)
+        break
+      default:
+        return null
     }
 
     newState.usernameBlurInvoked = false
@@ -88,8 +110,6 @@ function FormSignup (props) {
   }
 
   const handleCreateButton = () => {
-    const { firstname, lastname, username, password, passwordConfirm } = state
-
     if (isRegisteringUser) {
       return true
     } else if (registrationError) {
@@ -108,7 +128,7 @@ function FormSignup (props) {
       case 'username':
         if (state.errors[field]) {
           return state.errors[field]
-        } else if (state[field].length >= 3 && isUsernameAvailable === false && !isVerifyingUsername) {
+        } else if (username.length >= 3 && isUsernameAvailable === false && !isVerifyingUsername) {
           return 'This username is unavailable.'
         }
         break
@@ -122,7 +142,7 @@ function FormSignup (props) {
   }
 
   const handleUsernameInputColor = () => {
-    const { errors, username, usernameBlurInvoked } = state
+    const { errors, usernameBlurInvoked } = state
 
     if (usernameBlurInvoked && !isVerifyingUsername) {
       if (errors.username) {
@@ -166,7 +186,7 @@ function FormSignup (props) {
             id='firstname'
             label='Firstname'
             handleChange={val => handleChange('firstname', val)}
-            value={state.firstname}
+            value={firstname}
           />
 
           <InputField
@@ -176,7 +196,7 @@ function FormSignup (props) {
             id='lastname'
             label='Lastname'
             handleChange={val => handleChange('lastname', val)}
-            value={state.lastname}
+            value={lastname}
           />
 
           <InputField
@@ -190,7 +210,7 @@ function FormSignup (props) {
             label='Username'
             handleBlur={val => handleBlur(val)}
             handleChange={val => handleChange('username', val)}
-            value={state.username}
+            value={username}
           />
 
           <InputField
@@ -201,7 +221,7 @@ function FormSignup (props) {
             isSecure
             label='Password'
             handleChange={val => handleChange('password', val)}
-            value={state.password}
+            value={password}
             visibilityIcons={[VisibilityOff, Visibility]}
           />
 
@@ -213,7 +233,7 @@ function FormSignup (props) {
             isSecure
             label='Confirm Password'
             handleChange={val => handleChange('passwordConfirm', val)}
-            value={state.passwordConfirm}
+            value={passwordConfirm}
             visibilityIcons={[VisibilityOff, Visibility]}
           />
 
