@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   data: null,
+  isAuthenticating: false,
   isRegisteringUser: false,
   isVerifyingUsername: false,
   isUsernameAvailable: null,
@@ -10,7 +11,7 @@ const reducer = (state = INITIAL_STATE, action) => {
   const { type } = action
 
   switch (type) {
-    case 'RECOVER_STORED_USER':
+    case 'AUTH_TOKEN_SUCCESS':
       return (function () {
         let user
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SnackbarProvider } from 'notistack'
 
-import { recoverStoredUser } from './store/actions/user'
+import userActions from './store/actions/user'
 
 import Login from './views/Login'
 import Main from './views/Main'
@@ -14,7 +14,7 @@ function App () {
   const user = useSelector(state => state.user.data)
 
   if (!user) {
-    dispatch(recoverStoredUser())
+    dispatch(userActions.authenticateWithToken())
   }
 
   return (
