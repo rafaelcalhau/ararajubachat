@@ -6,7 +6,7 @@ export const authenticateWithToken = (apiClient, localStorage) => (dispatch) => 
   if (storedData) {
     try {
       const user = JSON.parse(storedData)
-      dispatch(authenticateWithTokenRequest({ isAuthenticating: true }))
+      dispatch(authenticateWithTokenRequest())
 
       setTimeout(() => {
         apiClient
@@ -44,7 +44,7 @@ export const verifyUsername = (apiClient, username) => (dispatch) => {
 
 const authenticateWithTokenFailure = (err) => ({ type: 'AUTH_TOKEN_FAILURE', data: err })
 
-const authenticateWithTokenRequest = (data) => ({ type: 'AUTH_TOKEN_REQUEST', data })
+const authenticateWithTokenRequest = () => ({ type: 'AUTH_TOKEN_REQUEST' })
 
 const authenticateWithTokenSuccess = (data) => ({ type: 'AUTH_TOKEN_SUCCESS', data })
 

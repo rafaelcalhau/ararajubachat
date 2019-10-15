@@ -27,9 +27,7 @@ function App () {
       maxSnack={3}
     >
       {
-        !user
-          ? <Login />
-          : <Main />
+        !user ? <Login /> : <Main />
       }
     </SnackbarProvider>
   )

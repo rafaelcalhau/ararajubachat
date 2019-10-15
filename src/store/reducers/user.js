@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   data: null,
-  isAuthenticating: false,
+  authError: null,
   isRegisteringUser: false,
   isVerifyingUsername: false,
   isUsernameAvailable: null,
@@ -11,6 +11,11 @@ const reducer = (state = INITIAL_STATE, action) => {
   const { type } = action
 
   switch (type) {
+    case 'AUTH_TOKEN_FAILURE':
+      return {
+        ...state,
+        authError: action.data
+      }
     case 'AUTH_TOKEN_SUCCESS':
       return {
         ...state,
