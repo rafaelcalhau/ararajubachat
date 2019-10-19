@@ -1,3 +1,4 @@
+import * as types from './types'
 import apiClient from '../../modules/apiclient'
 
 export const authenticateWithToken = (apiClient, localStorage) => (dispatch) => {
@@ -42,23 +43,23 @@ export const verifyUsername = (apiClient, username) => (dispatch) => {
     .catch(err => dispatch(verifyUsernameFailure(err)))
 }
 
-const authenticateWithTokenFailure = (err) => ({ type: 'AUTH_TOKEN_FAILURE', data: err })
+const authenticateWithTokenFailure = (err) => ({ type: types.AUTH_TOKEN_FAILURE, data: err })
 
-const authenticateWithTokenRequest = () => ({ type: 'AUTH_TOKEN_REQUEST' })
+const authenticateWithTokenRequest = () => ({ type: types.AUTH_TOKEN_REQUEST })
 
-const authenticateWithTokenSuccess = (data) => ({ type: 'AUTH_TOKEN_SUCCESS', data })
+const authenticateWithTokenSuccess = (data) => ({ type: types.AUTH_TOKEN_SUCCESS, data })
 
-const registerUserFailure = (err) => ({ type: 'REGISTER_USER_FAILURE', data: err })
+const registerUserFailure = (err) => ({ type: types.REGISTER_USER_FAILURE, data: err })
 
-const registerUserRequest = () => ({ type: 'REGISTER_USER_REQUEST' })
+const registerUserRequest = () => ({ type: types.REGISTER_USER_REQUEST })
 
-const registerUserSuccess = (data) => ({ type: 'REGISTER_USER_SUCCESS', data })
+const registerUserSuccess = (data) => ({ type: types.REGISTER_USER_SUCCESS, data })
 
-const verifyUsernameFailure = (err) => ({ type: 'VERIFY_USERNAME_FAILURE', data: err })
+const verifyUsernameFailure = (err) => ({ type: types.VERIFY_USERNAME_FAILURE, data: err })
 
-const verifyUsernameRequest = () => ({ type: 'VERIFY_USERNAME_REQUEST' })
+const verifyUsernameRequest = () => ({ type: types.VERIFY_USERNAME_REQUEST })
 
-const verifyUsernameSuccess = (data) => ({ type: 'VERIFY_USERNAME_SUCCESS', data })
+const verifyUsernameSuccess = (data) => ({ type: types.VERIFY_USERNAME_SUCCESS, data })
 
 export default {
   authenticateWithToken: authenticateWithToken.bind(null, apiClient, window.localStorage),

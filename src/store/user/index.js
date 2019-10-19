@@ -1,3 +1,5 @@
+import * as types from './types'
+
 const INITIAL_STATE = {
   data: null,
   authError: null,
@@ -11,29 +13,29 @@ const reducer = (state = INITIAL_STATE, action) => {
   const { type } = action
 
   switch (type) {
-    case 'AUTH_TOKEN_FAILURE':
+    case types.AUTH_TOKEN_FAILURE:
       return {
         ...state,
         authError: action.data
       }
-    case 'AUTH_TOKEN_SUCCESS':
+    case types.AUTH_TOKEN_SUCCESS:
       return {
         ...state,
         data: action.data
       }
-    case 'REGISTER_USER_FAILURE':
+    case types.REGISTER_USER_FAILURE:
       return {
         ...state,
         isRegisteringUser: false,
         registrationError: action.data
       }
-    case 'REGISTER_USER_REQUEST':
+    case types.REGISTER_USER_REQUEST:
       return {
         ...state,
         isRegisteringUser: true,
         registrationError: null
       }
-    case 'REGISTER_USER_SUCCESS':
+    case types.REGISTER_USER_SUCCESS:
       return (function () {
         const user = {
           name: action.data.firstname,
@@ -50,18 +52,18 @@ const reducer = (state = INITIAL_STATE, action) => {
           registrationError: null
         }
       }())
-    case 'VERIFY_USERNAME_FAILURE':
+    case types.VERIFY_USERNAME_FAILURE:
       return {
         ...state,
         isVerifyingUsername: false,
         isUsernameAvailable: false
       }
-    case 'VERIFY_USERNAME_REQUEST':
+    case types.VERIFY_USERNAME_REQUEST:
       return {
         ...state,
         isVerifyingUsername: true
       }
-    case 'VERIFY_USERNAME_SUCCESS':
+    case types.VERIFY_USERNAME_SUCCESS:
       return {
         ...state,
         isVerifyingUsername: false,
