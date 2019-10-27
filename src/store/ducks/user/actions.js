@@ -1,5 +1,5 @@
-import * as types from './types'
-import apiClient from '../../modules/apiclient'
+import types from './types'
+import apiClient from '../../../modules/apiclient'
 
 export const authenticateWithToken = (apiClient, localStorage) => (dispatch) => {
   const storedData = localStorage.getItem('ararajubachat')

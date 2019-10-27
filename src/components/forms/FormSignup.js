@@ -14,7 +14,7 @@ import InputField from '../material/InputField'
 import { appName, regexList } from '../../config/settings.json'
 import Logo from '../../assets/images/logo.png'
 
-import actions from '../../store/user/actions'
+import actions from '../../store/ducks/user/actions'
 import validator from '../../modules/validators/signup'
 
 function FormSignup (props) {

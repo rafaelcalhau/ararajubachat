@@ -9,7 +9,7 @@ import Button from '../../../components/material/Button'
 import InputField from '../../../components/material/InputField'
 import FormSignup from '../../../components/forms/FormSignup'
 import { regexList } from '../../../config/settings.json'
-import { registerUser, verifyUsername } from '../../../store/actions/user'
+import { registerUser, verifyUsername } from '../../../store/ducks/user/actions'
 import reducer from '../../../store'
 import validator from '../../../modules/validators/signup'
 
@@ -150,9 +150,9 @@ describe('<FormSignup />', () => {
     const data = {}
     const dispatch = jest.fn(params => {
       if (callNumber === 0) {
-        expect(params).toEqual({ type: 'VERIFY_USERNAME_REQUEST' })
+        expect(params).toEqual({ type: 'user/VERIFY_USERNAME_REQUEST' })
       } else if (callNumber === 1) {
-        expect(params).toEqual({ type: 'VERIFY_USERNAME_SUCCESS', data })
+        expect(params).toEqual({ type: 'user/VERIFY_USERNAME_SUCCESS', data })
 
         done()
       }
@@ -187,9 +187,9 @@ describe('<FormSignup />', () => {
     const data = {}
     const dispatch = jest.fn(params => {
       if (callNumber === 0) {
-        expect(params).toEqual({ type: 'REGISTER_USER_REQUEST' })
+        expect(params).toEqual({ type: 'user/REGISTER_USER_REQUEST' })
       } else if (callNumber === 1) {
-        expect(params).toEqual({ type: 'REGISTER_USER_SUCCESS', data })
+        expect(params).toEqual({ type: 'user/REGISTER_USER_SUCCESS', data })
 
         done()
       }

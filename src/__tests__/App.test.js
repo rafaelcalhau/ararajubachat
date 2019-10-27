@@ -6,7 +6,7 @@ import thunk from 'redux-thunk'
 
 import App from '../App.js'
 import reducer from './../store'
-import { authenticateWithToken } from '../store/actions/user'
+import { authenticateWithToken } from '../store/ducks/user/actions'
 
 const store = createStore(reducer, applyMiddleware(thunk))
 
@@ -32,9 +32,9 @@ describe('<App />', () => {
     const data = {}
     const dispatch = jest.fn(params => {
       if (callNumber === 0) {
-        expect(params.type).toBe('AUTH_TOKEN_REQUEST')
+        expect(params.type).toBe('user/AUTH_TOKEN_REQUEST')
       } else if (callNumber === 1) {
-        expect(params.type).toBe('AUTH_TOKEN_SUCCESS')
+        expect(params.type).toBe('user/AUTH_TOKEN_SUCCESS')
         done()
       }
   

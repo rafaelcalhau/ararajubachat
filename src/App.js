@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SnackbarProvider } from 'notistack'
 
-import userActions from './store/user/actions'
+import userActions from './store/ducks/user/actions'
 
 import Login from './views/Login'
 import Main from './views/Main'
