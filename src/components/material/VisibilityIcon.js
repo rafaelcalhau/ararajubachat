@@ -17,7 +17,7 @@ export default function VisibilityIcon (props) {
 
   return (
     <InputAdornment position='end'>
-      <IconButton onClick={handleClickShowPassword}>
+      <IconButton tabIndex={props.tabIndex || -1} onClick={handleClickShowPassword}>
         {
           !isVisible ? <Default /> : <Off />
         }

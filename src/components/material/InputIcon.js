@@ -8,7 +8,7 @@ const InputIcon = (props) => {
 
   return (
     <InputAdornment position={props.position || 'end'}>
-      <IconButton style={props.color && { color: props.color }}>
+      <IconButton tabIndex={props.tabIndex || -1} style={props.color && { color: props.color }}>
         <Icon />
       </IconButton>
     </InputAdornment>
