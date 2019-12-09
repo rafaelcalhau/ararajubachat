@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Power3 } from 'gsap'
 import TweenLite from 'gsap/umd/TweenLite'
 
@@ -9,15 +10,20 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Button from '../material/Button'
 import InputField from '../material/InputField'
 
+import actions from '../../store/ducks/user/actions'
+import validator from '../../modules/validators/login'
 import { appName } from '../../config/settings.json'
 import Logo from '../../assets/images/logo.png'
 
 function FormLogin (props) {
-  let formElement = null
+  const dispatch = useDispatch()
   const [state, setState] = useState({
+    errors: {},
     username: '',
     password: ''
   })
+
+  let formElement = null
 
   useEffect(() => {
     TweenLite.fromTo(formElement, 0.5, { x: -40, opacity: 0 }, { x: 0, opacity: 1, ease: Power3.ease })
@@ -32,6 +38,23 @@ function FormLogin (props) {
 
   const handleChange = (field, value) => {
     setState({ ...state, [field]: value })
+  }
+
+  const login = () => {
+    const { username, password } = state
+    const validation = validator({ username, password })
+
+    if (!validation.success) {
+      setState({
+        ...state,
+        errors: {
+          ...state.errors,
+          ...validation.errors
+        }
+      })
+    } else {
+      dispatch(actions.authenticate(username, password))
+    }
   }
 
   return (
@@ -64,7 +87,11 @@ function FormLogin (props) {
           />
 
           <div className='button'>
-            <Button full label='Sign In' />
+            <Button
+              full
+              label='Sign In'
+              onClick={() => login()}
+            />
           </div>
 
           <div className='separator'>or</div>

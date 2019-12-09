@@ -3,6 +3,7 @@ import types from './types'
 const INITIAL_STATE = {
   data: null,
   authError: null,
+  isRequestingLogin: false,
   isRegisteringUser: false,
   isVerifyingUsername: false,
   isUsernameAvailable: null,
@@ -13,6 +14,23 @@ const reducer = (state = INITIAL_STATE, action) => {
   const { type } = action
 
   switch (type) {
+    case types.AUTH_FAILURE:
+      return {
+        ...state,
+        authError: action.data,
+        isRequestingLogin: false
+      }
+    case types.AUTH_REQUEST:
+      return {
+        ...state,
+        isRequestingLogin: true
+      }
+    case types.AUTH_SUCCESS:
+      return {
+        ...state,
+        data: action.data,
+        isRequestingLogin: false
+      }
     case types.AUTH_TOKEN_FAILURE:
       return {
         ...state,
