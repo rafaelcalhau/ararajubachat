@@ -39,6 +39,8 @@ export const authenticateWithToken = (apiClient, localStorage) => (dispatch) => 
   }
 }
 
+export const logout = () => ({ type: types.LOGOUT })
+
 export const registerUser = (apiClient, userData) => (dispatch) => {
   dispatch(registerUserRequest())
 

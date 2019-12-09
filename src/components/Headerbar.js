@@ -1,11 +1,14 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Dropdown, Icon, Menu } from 'semantic-ui-react'
 
+import { logout } from '../store/ducks/user/actions'
 import Logo from '../assets/images/logo.png'
 import { appName } from '../config/settings.json'
 
 export default function Headerbar () {
+  const dispatch = useDispatch()
+  const doLogout = () => dispatch(logout())
   const user = useSelector(state => state.user.data)
 
   return (
@@ -17,13 +20,13 @@ export default function Headerbar () {
           <Dropdown.Menu>
             <Dropdown.Item>
               <Icon name='users' />
-              <span className='text'>Contacts</span>
+              <span className='text'>My groups</span>
             </Dropdown.Item>
             <Dropdown.Item>
               <Icon name='cog' />
               <span className='text'>Settings</span>
             </Dropdown.Item>
-            <Dropdown.Item>
+            <Dropdown.Item onClick={doLogout}>
               <Icon name='sign out' />
               <span className='text'>Logout</span>
             </Dropdown.Item>

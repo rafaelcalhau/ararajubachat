@@ -41,6 +41,8 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         data: action.data
       }
+    case types.LOGOUT:
+      return { ...INITIAL_STATE }
     case types.REGISTER_USER_FAILURE:
       return {
         ...state,
