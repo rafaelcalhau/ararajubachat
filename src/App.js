@@ -1,3 +1,4 @@
+import { hot } from 'react-hot-loader/root'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { SnackbarProvider } from 'notistack'
@@ -33,4 +34,4 @@ function App () {
   )
 }
 
-export default App
+export default hot(App)
