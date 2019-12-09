@@ -18,6 +18,33 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+header.topbar {
+  align-items: center;
+  background-color: #333;
+  border-bottom: solid 1px #ddd;
+  display: flex;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0 20px;
+}
+
+header.topbar img.logo {
+  height: 50px;
+  width: auto;
+}
+
+header.topbar .user {
+  background: none;
+  color: #f3f3f3;
+  font-size: 13px;
+  text-align: right;
+}
+
+header.topbar .user > div > .text {
+  color: #f3f3f3;
+  padding-right: 15px;
+}
+
 .pageloader {
   background: url('../images/bg-app.png') center bottom repeat-x #FEFBB4;
   display: flex;

@@ -1,13 +1,10 @@
 import React from 'react'
 
-import Logo from '../assets/images/logo.png'
-import { appName } from '../config/settings.json'
+import Headerbar from '../components/Headerbar'
 
 function Main () {
   return (
-    <header>
-      <img src={Logo} alt={appName} className='logo' />
-    </header>
+    <Headerbar />
   )
 }
 
