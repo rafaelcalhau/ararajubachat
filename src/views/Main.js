@@ -6,8 +6,8 @@ import actions from '../store/ducks/groups/actions'
 
 function Main () {
   const dispatch = useDispatch()
-  const { data: groups, isLoaded: groupsLoaded } = useSelector(state => state.groups)
-  const { token } = useSelector(state => state.user.data)
+  const { public: publicGroups, private: privateGroups } = useSelector(state => state.groups)
+  const { id: userId, token } = useSelector(state => state.user.data)
 
   const panes = [
     {
@@ -22,37 +22,66 @@ function Main () {
       menuItem: 'My groups',
       render: () => (
         <Tab.Pane attached>
-          ...
+          {renderGroups('private')}
         </Tab.Pane>
       )
     }
   ]
 
-  useEffect(() => dispatch(actions.loadGroups(token)), []) // eslint-disable-line
+  useEffect(() => {
+    dispatch(actions.loadGroups(token))
+    dispatch(actions.loadUserGroups(userId, token))
+  }, []) // eslint-disable-line
 
-  function renderGroups () {
-    if (groupsLoaded && !groups.length) {
+  function renderGroups (type = 'public') {
+    if (type === 'public') {
+      if (publicGroups.isLoaded && !publicGroups.data.length) {
+        return (
+          <small>No groups available.</small>
+        )
+      }
+
       return (
-        <small>No groups available.</small>
+        <>
+          <Header as='h3'>Public Groups</Header>
+
+          <ul id='publicGroups'>
+            {
+              publicGroups.data.map(group => (
+                <li key={group._id}>
+                  <strong>{group.name}</strong><br />
+                  <small>{group.description}</small>
+                </li>
+              ))
+            }
+          </ul>
+        </>
+      )
+    } else {
+      if (privateGroups.isLoaded && !privateGroups.data.length) {
+        return (
+          <small>No private groups.</small>
+        )
+      }
+  
+      return (
+        <>
+          <Header as='h3'>Public Groups</Header>
+  
+          <ul id='privateGroups'>
+            {
+              privateGroups.data.map(group => (
+                <li key={group._id}>
+                  <strong>{group.name}</strong><br />
+                  <small>{group.description}</small>
+                </li>
+              ))
+            }
+          </ul>
+        </>
       )
     }
-
-    return (
-      <>
-        <Header as='h3'>Public Groups</Header>
-
-        <ul id='publicGroups'>
-          {
-            groups.map(group => (
-              <li key={group._id}>
-                <strong>{group.name}</strong><br />
-                <small>{group.description}</small>
-              </li>
-            ))
-          }
-        </ul>
-      </>
-    )
+    
   }
 
   return (
