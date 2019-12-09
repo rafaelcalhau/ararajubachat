@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Header, Tab } from 'semantic-ui-react'
+import { Tab } from 'semantic-ui-react'
 import Headerbar from '../components/Headerbar'
+import ListGroups from '../components/ListGroups'
 import actions from '../store/ducks/groups/actions'
 
 function Main () {
@@ -41,47 +42,16 @@ function Main () {
         )
       }
 
-      return (
-        <>
-          <Header as='h3'>Public Groups</Header>
-
-          <ul id='publicGroups'>
-            {
-              publicGroups.data.map(group => (
-                <li key={group._id}>
-                  <strong>{group.name}</strong><br />
-                  <small>{group.description}</small>
-                </li>
-              ))
-            }
-          </ul>
-        </>
-      )
+      return <ListGroups id='publicGroups' data={publicGroups.data} />
     } else {
       if (privateGroups.isLoaded && !privateGroups.data.length) {
         return (
           <small>No private groups.</small>
         )
       }
-  
-      return (
-        <>
-          <Header as='h3'>Public Groups</Header>
-  
-          <ul id='privateGroups'>
-            {
-              privateGroups.data.map(group => (
-                <li key={group._id}>
-                  <strong>{group.name}</strong><br />
-                  <small>{group.description}</small>
-                </li>
-              ))
-            }
-          </ul>
-        </>
-      )
+
+      return <ListGroups id='privateGroups' data={privateGroups.data} />
     }
-    
   }
 
   return (
