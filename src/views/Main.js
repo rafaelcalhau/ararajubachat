@@ -36,21 +36,23 @@ function Main () {
 
   function renderGroups (type = 'public') {
     if (type === 'public') {
-      if (publicGroups.isLoaded && !publicGroups.data.length) {
-        return (
-          <small>No groups available.</small>
-        )
-      }
-
-      return <ListGroups id='publicGroups' data={publicGroups.data} />
+      return (
+        <ListGroups
+          id='publicGroups'
+          data={publicGroups.data}
+          loaded={publicGroups.isLoaded}
+          textEmpty='No groups available.'
+        />
+      )
     } else {
-      if (privateGroups.isLoaded && !privateGroups.data.length) {
-        return (
-          <small>No private groups.</small>
-        )
-      }
-
-      return <ListGroups id='privateGroups' data={privateGroups.data} />
+      return (
+        <ListGroups
+          id='privateGroups'
+          data={privateGroups.data}
+          loaded={privateGroups.isLoaded}
+          textEmpty='No private groups.'
+        />
+      )
     }
   }
 

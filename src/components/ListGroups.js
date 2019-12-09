@@ -1,6 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-export default function ListGroups ({ id, data }) {
+const ListGroups = ({ id, data, loaded, textEmpty }) => {
+  if (loaded && !data.length) {
+    return (
+      <small>{textEmpty}</small>
+    )
+  }
+
   return (
     <ul id={id}>
       {
@@ -14,3 +21,12 @@ export default function ListGroups ({ id, data }) {
     </ul>
   )
 }
+
+ListGroups.propTypes = {
+  id: PropTypes.string,
+  data: PropTypes.array,
+  loaded: PropTypes.bool,
+  textEmpty: PropTypes.string
+}
+
+export default ListGroups
