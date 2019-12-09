@@ -3,6 +3,7 @@ import types from './types'
 const INITIAL_STATE = {
   data: [],
   error: '',
+  isLoaded: false,
   isLoading: false
 }
 
@@ -14,11 +15,13 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         error: action.data,
+        isLoaded: true,
         isLoading: false
       }
     case types.LIST_REQUEST:
       return {
         ...state,
+        isLoaded: false,
         isLoading: true
       }
     case types.LIST_SUCCESS:
@@ -26,6 +29,7 @@ const reducer = (state = INITIAL_STATE, action) => {
         ...state,
         data: action.data,
         error: '',
+        isLoaded: true,
         isLoading: false
       }
     default:

@@ -2,6 +2,7 @@
 
 * {
     font-family: 'Ubuntu', sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
 html, body {
@@ -18,14 +19,32 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.tabnav .ui.menu {
+  background-color: #333;
+  margin-bottom: 0
+}
+
+.tabnav .ui.menu .item {
+  color: #f3f3f3;
+  width: 50%;
+}
+
+.tabnav .ui.menu .active.item {
+  border-color: #04c514 !important;
+  color: #fff !important;
+}
+
+.tabnav .ui.tab {
+  min-height: calc(100vh - 120px);
+}
+
 header.topbar {
   align-items: center;
   background-color: #333;
-  border-bottom: solid 1px #ddd;
   display: flex;
   justify-content: space-between;
-  height: 60px;
-  padding: 0 20px;
+  height: 80px;
+  padding: 0 20px 20px;
 }
 
 header.topbar img.logo {
