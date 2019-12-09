@@ -19,10 +19,6 @@ export default function Headerbar () {
         <Dropdown item icon='user' labeled simple text={user.name}>
           <Dropdown.Menu>
             <Dropdown.Item>
-              <Icon name='users' />
-              <span className='text'>My groups</span>
-            </Dropdown.Item>
-            <Dropdown.Item>
               <Icon name='cog' />
               <span className='text'>Settings</span>
             </Dropdown.Item>
