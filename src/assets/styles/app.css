@@ -19,6 +19,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.aligned.center {
+  text-align: center;
+}
+
+.no-content {
+  margin: 15px auto;
+}
+
+.no-content .sub.header button {
+  margin-top: 10px;
+}
+
 .tabnav .ui.menu {
   background-color: #333;
   margin-bottom: 0

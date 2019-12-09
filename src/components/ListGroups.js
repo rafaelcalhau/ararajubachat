@@ -1,11 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Header, Icon } from 'semantic-ui-react'
 
-const ListGroups = ({ id, data, loaded, textEmpty }) => {
+const ListGroups = ({ id, data, loaded, empty }) => {
   if (loaded && !data.length) {
-    return (
-      <small>{textEmpty}</small>
-    )
+    if (typeof empty === 'string') {
+      return (
+        <div className='center aligned no-content'>
+          <Header as='h4' icon>
+            <Icon disabled name='group' />
+            {empty}
+          </Header>
+        </div>
+      )
+    } else {
+      return (
+        <div className='center aligned no-content'>
+          <Header as='h4' icon>
+            <Icon disabled name='group' />
+            {empty()}
+          </Header>
+        </div>
+      )
+    }
   }
 
   return (
@@ -25,8 +42,8 @@ const ListGroups = ({ id, data, loaded, textEmpty }) => {
 ListGroups.propTypes = {
   id: PropTypes.string,
   data: PropTypes.array,
-  loaded: PropTypes.bool,
-  textEmpty: PropTypes.string
+  empty: PropTypes.string | PropTypes.func,
+  loaded: PropTypes.bool
 }
 
 export default ListGroups

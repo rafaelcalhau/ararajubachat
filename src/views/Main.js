@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Tab } from 'semantic-ui-react'
+import { Button, Header, Tab } from 'semantic-ui-react'
 import Headerbar from '../components/Headerbar'
 import ListGroups from '../components/ListGroups'
 import actions from '../store/ducks/groups/actions'
@@ -41,7 +41,7 @@ function Main () {
           id='publicGroups'
           data={publicGroups.data}
           loaded={publicGroups.isLoaded}
-          textEmpty='No groups available.'
+          empty='No groups available.'
         />
       )
     } else {
@@ -50,7 +50,14 @@ function Main () {
           id='privateGroups'
           data={privateGroups.data}
           loaded={privateGroups.isLoaded}
-          textEmpty='No private groups.'
+          empty={() => (
+            <>
+              No private groups.
+              <Header.Subheader>
+                <Button basic>New Group</Button>
+              </Header.Subheader>
+            </>
+          )}
         />
       )
     }
